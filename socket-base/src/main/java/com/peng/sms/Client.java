@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import static com.peng.sms.CommonConstant.LOCAL_HOST;
+import static com.peng.sms.CommonConstant.SERVER_PORT;
 
 @Slf4j
 public class Client {
@@ -20,26 +21,16 @@ public class Client {
 
         new Thread(() -> {
             Server.startServer();
-        },"Server").start();
+        }, "Server").start();
 
-        Scanner scanner = new Scanner(System.in);
-        // Create Socket connection to server
-        System.out.print("Enter the port: ");
-
-        // Test error handling for invalid connections
-        int serverPort = Integer.parseInt(scanner.nextLine());
-        if (serverPort != CommonConstant.SERVER_PORT) {
-            log.error("the port is wrong");
-        }
-
-        try (Socket socket = new Socket(LOCAL_HOST, serverPort);
+        try (Socket socket = new Socket(LOCAL_HOST, SERVER_PORT);
              // Create input/output streams
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {
 
             // Wait for response
-            log.info("Connected to server at " + LOCAL_HOST + ":{}", serverPort);
+            log.info("Connected to server at " + LOCAL_HOST + ":{}", SERVER_PORT);
 
             // Print server response
             System.out.print("Enter message: ");

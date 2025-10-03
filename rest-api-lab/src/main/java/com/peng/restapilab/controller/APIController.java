@@ -20,12 +20,12 @@ public class APIController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable String id) {
+    public User getUserById(@PathVariable String id) {
         return userService.getUserById(id);
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public boolean createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
@@ -34,8 +34,8 @@ public class APIController {
         return userService.updateUser(id, user);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable String id) {
-        userService.deleteUser(id);
+    @DeleteMapping("/delete/{id}")
+    public boolean deleteUser(@PathVariable String id) {
+        return userService.deleteUser(id);
     }
 }
