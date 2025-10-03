@@ -49,7 +49,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <finalName>grbc-lab-all</finalName>
+              <finalName>grpc-lab-all</finalName>
               <transformers>
                 <transformer>
                   <mainClass>com.peng.sms.Main</mainClass>

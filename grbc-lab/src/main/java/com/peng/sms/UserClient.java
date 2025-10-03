@@ -26,7 +26,7 @@ public class UserClient {
             UserServiceOuterClass.UserResponse response = stub.getUser(request);
             System.out.println("User info: " + response.getName() + ", " + response.getEmail());
             long end = System.currentTimeMillis();
-            System.out.println("time: " + (end - start));
+            System.out.println("grpc-lab test: the time is: " + (end - start));
         } finally {
             channel.shutdown();
         }

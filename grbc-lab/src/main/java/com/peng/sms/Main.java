@@ -1,8 +1,8 @@
 package com.peng.sms;
 
 public class Main {
-
     public static void main(String[] args) {
+        System.out.println("--------------------------------------- the grpc-lab start ---------------------------------------");
         Thread serverThread = new Thread(() -> {
             UserServer.start();
             try {
@@ -16,11 +16,8 @@ public class Main {
         serverThread.start();
 
         try {
-
             System.out.println("Waiting for server to start...");
             Thread.sleep(2000);
-
-
             System.out.println("Starting client...");
             UserClient.startClient();
             System.out.println("Client completed!");
@@ -32,5 +29,6 @@ public class Main {
             UserServer.stop();
             System.out.println("Program exiting...");
         }
+        System.out.println("--------------------------------------- the grpc-lab end ---------------------------------------");
     }
 }

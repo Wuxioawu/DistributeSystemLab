@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  rest-service:
+    image: rest-api-lab
+    container_name: rest-service
+    ports:
+      - "15002:19002"
+    restart: no
+
+  grpc-service:
+    image: grpc-lab
+    container_name: grpc-service
+    ports:
+      - "15003:50051"
+    restart: no
