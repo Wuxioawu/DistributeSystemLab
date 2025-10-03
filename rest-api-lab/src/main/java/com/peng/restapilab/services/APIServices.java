@@ -2,15 +2,15 @@ package com.peng.restapilab.services;
 
 import com.peng.restapilab.model.User;
 import com.peng.restapilab.resposity.UserDao;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@Slf4j
 public class APIServices {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(APIServices.class);
 
     @Autowired
     private UserDao userDao;
