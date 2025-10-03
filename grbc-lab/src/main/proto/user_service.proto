@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package com.peng.sms;
+
+service UserService {
+
+  rpc GetUser (UserRequest) returns (UserResponse);
+}
+
+message UserRequest {
+  int32 user_id = 1;
+}
+
+message UserResponse {
+  int32 user_id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
+message Empty {}
