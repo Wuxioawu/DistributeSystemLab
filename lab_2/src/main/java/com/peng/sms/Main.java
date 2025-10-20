@@ -1,7 +1,6 @@
 package com.peng.sms;
 
 import redis.clients.jedis.HostAndPort;
-import redis.clients.jedis.JedisCluster;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,15 +8,13 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
         Set<HostAndPort> nodes = new HashSet<>();
-        nodes.add(new HostAndPort("127.0.0.1", 7001));
-        nodes.add(new HostAndPort("127.0.0.1", 7002));
-        nodes.add(new HostAndPort("127.0.0.1", 7003));
-        nodes.add(new HostAndPort("127.0.0.1", 7004));
-        nodes.add(new HostAndPort("127.0.0.1", 7005));
-        nodes.add(new HostAndPort("127.0.0.1", 7006));
-
-        JedisCluster jedisCluster = new JedisCluster(nodes);
-
+        String LOCAL_HOST = "172.18.195.82";
+        nodes.add(new HostAndPort(LOCAL_HOST, 7001));
+        nodes.add(new HostAndPort(LOCAL_HOST, 7002));
+        nodes.add(new HostAndPort(LOCAL_HOST, 7003));
+        nodes.add(new HostAndPort(LOCAL_HOST, 7004));
+        nodes.add(new HostAndPort(LOCAL_HOST, 7005));
+        nodes.add(new HostAndPort(LOCAL_HOST, 7006));
 
         UserProfileRepository repo = new UserProfileRepository(nodes);
 
