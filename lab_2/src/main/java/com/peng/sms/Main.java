@@ -1,34 +1,17 @@
 package com.peng.sms;
 
-import redis.clients.jedis.HostAndPort;
-
-import java.util.HashSet;
-import java.util.Set;
-
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Set<HostAndPort> nodes = new HashSet<>();
-        nodes.add(new HostAndPort("127.0.0.1", 7001));
-        nodes.add(new HostAndPort("127.0.0.1", 7002));
-        nodes.add(new HostAndPort("127.0.0.1", 7003));
+        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
+        // to see how IntelliJ IDEA suggests fixing it.
+        System.out.printf("Hello and welcome!");
 
-        UserProfileRepository repo = new UserProfileRepository(nodes);
-
-        // 创建用户
-        UserProfile user1 = new UserProfile("1001", "Alice", "alice@example.com", null);
-        repo.create(user1);
-
-        // 获取用户
-        UserProfile u = repo.get("1001");
-        System.out.println(u);
-
-        // 更新用户
-        u.setUsername("Alice_updated");
-        repo.update(u);
-
-        // 删除用户
-        repo.delete("1001");
-
-        repo.close();
+        for (int i = 1; i <= 5; i++) {
+            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
+            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
+            System.out.println("i = " + i);
+        }
     }
 }

@@ -102,6 +102,7 @@ services:
              redis-node-6:7006 
              --cluster-replicas 1 
              --cluster-yes"
+
 volumes:
   redis-node-1-data:
   redis-node-2-data:
