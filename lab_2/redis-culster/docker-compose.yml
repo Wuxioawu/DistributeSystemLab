@@ -1,6 +1,7 @@
 services:
   redis-7001:
     image: redis:7
+    container_name: redis-7001
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7001:7001"
@@ -13,6 +14,7 @@ services:
 
   redis-7002:
     image: redis:7
+    container_name: redis-7002
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7002:7002"
@@ -25,6 +27,7 @@ services:
 
   redis-7003:
     image: redis:7
+    container_name: redis-7003
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7003:7003"
@@ -37,6 +40,7 @@ services:
 
   redis-7004:
     image: redis:7
+    container_name: redis-7004
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7004:7004"
@@ -49,6 +53,7 @@ services:
 
   redis-7005:
     image: redis:7
+    container_name: redis-7005
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7005:7005"
@@ -61,6 +66,7 @@ services:
 
   redis-7006:
     image: redis:7
+    container_name: redis-7006
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7006:7006"

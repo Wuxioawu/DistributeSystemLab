@@ -1,5 +1,4 @@
 # recreate the redis config files and restart the cluster
-
 cd ~/IdeaProjects/socket_lab/lab_2/redis-culster
 docker-compose down
 rm -rf 7001 7002 7003 7004 7005 7006
@@ -29,6 +28,7 @@ redis-7001:7001 redis-7002:7002 redis-7003:7003 \
 redis-7004:7004 redis-7005:7005 redis-7006:7006 \
 --cluster-replicas 1
 
+
 # modify the config epoch and announce ip
 
 docker-compose exec redis-7001 redis-cli -p 7001 CLUSTER SET-CONFIG-EPOCH 1
@@ -43,8 +43,9 @@ docker-compose exec redis-7006 redis-cli -p 7006 CONFIG SET cluster-announce-ip 
 
 docker-compose exec redis-7001 redis-cli -c -p 7001 cluster nodes
 
-
 # The nodes distribution
 Master 7001 (0-5460)  ← Slave 7005
 Master 7002 (5461-10922) ← Slave 7006
 Master 7003 (10923-16383) ← Slave 7004
+
+# log in
