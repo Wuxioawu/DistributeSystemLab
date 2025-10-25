@@ -14,8 +14,7 @@ public class PartC_ConsistencyModels {
     private static final String REDIS_HOST = "localhost";
     private static final int PRIMARY_PORT = 7001;
     private static final int REPLICA1_PORT = 7005;
-    private static final int REPLICA2_PORT = 7002;
-    
+
     private List<String> observations = new ArrayList<>();
     
     public static void main(String[] args) {
@@ -30,7 +29,7 @@ public class PartC_ConsistencyModels {
         System.out.println("╚════════════════════════════════════════════════════╝\n");
         
         // Test 1: Strong Consistency
-        testStrongConsistency();
+//        testStrongConsistency();
         
         // Test 2: Eventual Consistency
 //        testEventualConsistency();
@@ -39,7 +38,7 @@ public class PartC_ConsistencyModels {
 //        testCAPTheorem();
 
         // Test 4: Causal Consistency (using versioning)
-       // testCausalConsistency();
+        testCausalConsistency();
     }
     
     /**
@@ -66,7 +65,7 @@ public class PartC_ConsistencyModels {
             System.out.println("Step 1: Write to primary with WAIT for all replicas");
             long writeStart = System.nanoTime();
             primary.set(key, user.toJson());
-            long replicatedTo = primary.waitReplicas(2, 2000);
+            long replicatedTo = primary.waitReplicas(1, 2000);
             long writeTime = (System.nanoTime() - writeStart) / 1_000_000;
             
             System.out.println("  ✓ Write completed: " + writeTime + " ms");
@@ -74,6 +73,7 @@ public class PartC_ConsistencyModels {
             
             System.out.println("\nStep 2: Immediately read from replica");
             long readStart = System.nanoTime();
+            replica.readonly(); //
             String replicaData = replica.get(key);
             long readTime = (System.nanoTime() - readStart) / 1_000_000;
             
@@ -100,7 +100,7 @@ public class PartC_ConsistencyModels {
                 "**Strong Consistency**: Using WAIT command ensures data is replicated " +
                 "before acknowledging write. Latency: %.2f ms. Guarantees immediate " +
                 "consistency across all nodes. CAP: CP - sacrifices availability during " +
-                "partitions.", writeTime));
+                "partitions.",(double)writeTime));
             
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -124,7 +124,7 @@ public class PartC_ConsistencyModels {
             System.out.println("This simulates ONE/eventual consistency in other systems\n");
             
             // Create test data
-            String key = "consistency:eventual:001";
+            String key = "data_for_7005";
             UserProfile user = new UserProfile(
                 "eventual_001",
                 "eventual_user_v1",
@@ -138,6 +138,7 @@ public class PartC_ConsistencyModels {
             System.out.println("  ✓ Write completed: " + writeTime + " ms (very fast!)");
             
             System.out.println("\nStep 2: IMMEDIATELY read from replica (no delay)");
+            replica.readonly();
             String replicaData1 = replica.get(key);
             
             if (replicaData1 == null) {
@@ -297,11 +298,11 @@ public class PartC_ConsistencyModels {
             
             // Event A: User registration
             UserProfile user = new UserProfile("causal_001", "alice", "alice@test.com");
-            String userKey = "user:causal:001";
+            String userKey = "data_for_7001";
             
             System.out.println("Event A (t=0): User registration");
             primary.set(userKey, user.toJson());
-            primary.waitReplicas(2, 1000);
+            primary.waitReplicas(1, 1000);
             System.out.println("  Version: " + user.getVersion());
             Thread.sleep(50);
             
@@ -327,7 +328,7 @@ public class PartC_ConsistencyModels {
             // Concurrent Event X: Another user's action
             System.out.println("\nEvent X (t=75ms): Different user registration (concurrent)");
             UserProfile user2 = new UserProfile("causal_002", "bob", "bob@test.com");
-            primary.set("user:causal:002", user2.toJson());
+            primary.set("data_for_7005", user2.toJson());
             System.out.println("  Version: " + user2.getVersion());
             
             System.out.println("\nCausal Order Guarantee:");
