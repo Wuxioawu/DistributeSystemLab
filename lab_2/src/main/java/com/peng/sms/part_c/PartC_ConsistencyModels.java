@@ -3,7 +3,6 @@ package com.peng.sms.part_c;
 import com.peng.sms.part_a.UserProfile;
 import redis.clients.jedis.*;
 import java.util.*;
-import java.util.concurrent.*;
 
 /**
  * Part C: Consistency Models
