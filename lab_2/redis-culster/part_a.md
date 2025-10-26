@@ -1,3 +1,40 @@
+# the redis cluster architecture
+
+                ┌────────────────────────────┐
+                │         Redis Cluster      │
+                └────────────────────────────┘
+                           │
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│               Hash Slot Range: 0 ～ 16383                        │
+│   (Divided into three parts: 0–5460, 5461–10922, 10923–16383)   │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+                             │
+                             ▼
+
+                 ┌──────────────────────────────┐
+                 │         Master Nodes         │
+                 └──────────────────────────────┘
+                   │             │             │
+                   ▼             ▼             ▼
+
+         ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+         │ Master #1    │  │ Master #2    │  │ Master #3    │
+         │ redis-7001   │  │ redis-7002   │  │ redis-7003   │
+         │ Slots 0–5460 │  │ Slots 5461–10922 │ │ Slots 10923–16383 │
+         └──────┬───────┘  └──────┬───────┘  └──────┬───────┘
+                │                 │                 │
+                ▼                 ▼                 ▼
+        ┌────────────┐     ┌────────────┐     ┌────────────┐
+        │ Replica #1 │     │ Replica #2 │     │ Replica #3 │
+        │ redis-7005 │     │ redis-7006 │     │ redis-7004 │
+        │ Replicates │     │ Replicates │     │ Replicates │
+        │   7001     │     │   7002     │     │   7003     │
+        └────────────┘     └────────────┘     └────────────┘
+
+---
+
 # recreate the redis config files and restart the cluster
 cd ~/IdeaProjects/socket_lab/lab_2/redis-culster
 docker-compose down
