@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+backend:
+  base-url: ${BACKEND_URL:http://backend-service:8080}
+
+# Resilience4j configuration (can tweak)
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+    instances:
+      backendCB:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+
+  retry:
+    instances:
+      backendRetry:
+        maxAttempts: 4
+        waitDuration: 500ms
+        exponentialBackoffMultiplier: 2

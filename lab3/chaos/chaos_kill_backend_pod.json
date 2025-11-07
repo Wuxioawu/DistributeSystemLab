@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "title": "Kill one backend pod",
+  "description": "Delete one backend pod to simulate failure",
+  "steady-state-hypothesis": {
+    "title": "Client calls should succeed",
+    "probes": [
+      {
+        "type": "probe",
+        "name": "client-responding",
+        "tolerance": { "type": "probe", "ref": "client-healthy" }
+      }
+    ]
+  },
+  "method": [
+    {
+      "type": "action",
+      "name": "delete-backend-pod",
+      "provider": { "type": "python", "module": "chaosk8s.pod.actions", "func": "delete_pod" },
+      "arguments": { "label_selector": "app=backend-service", "namespace": "default", "timeout": 60 }
+    }
+  ],
+  "plugins": {
+    "python": { "module": "chaosk8s.pod.actions" }
+  },
+  "rollbacks": []
+}
