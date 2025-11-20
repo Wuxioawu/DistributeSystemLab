@@ -10,6 +10,12 @@
     </parent>
 
     <artifactId>lab4</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>user-service</module>
+        <module>order-service</module>
+        <module>api-gateway</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
